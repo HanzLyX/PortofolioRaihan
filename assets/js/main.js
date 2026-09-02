@@ -40,12 +40,23 @@
    * Hide mobile nav on same-page/hash links
    */
   document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
+    navmenu.addEventListener('click', function() {
+      if (document.querySelector('.mobile-nav-active') && this.hash) {
         mobileNavToogle();
       }
     });
+  });
 
+  /**
+   * Hide mobile nav on outside click
+   */
+  document.addEventListener('click', function(e) {
+    if (document.querySelector('body').classList.contains('mobile-nav-active')) {
+      const navmenu = document.querySelector('#navmenu');
+      if (navmenu && !navmenu.contains(e.target) && mobileNavToggleBtn && !mobileNavToggleBtn.contains(e.target)) {
+        mobileNavToogle();
+      }
+    }
   });
 
   /**
